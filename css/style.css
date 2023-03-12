@@ -17,5 +17,15 @@
   margin: auto;
   width: 70%;
   margin-top: 20px;
-  height: 100px;
+  height: 500px;
+}
+
+img {
+  height: 200px;
+  width: 200px;
+  margin: auto;
+}
+
+p {
+  margin-top: 15px;
 }

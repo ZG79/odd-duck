@@ -1,20 +1,22 @@
-'use strict'
+'use strict';
 let containerElem = document.getElementById('container');
 let itemOne = document.getElementById('one');
 let itemTwo = document.getElementById('two');
 let itemThree = document.getElementById('three');
 let button = document.getElementById('button');
-let results = document.getElementById('results')
+let results = document.getElementById('results');
+let voteCount = 25;
 
 const state = {
   array: [],
-}
+};
 
-function Odd (name, fileExtension = 'jpg'){
+function Odd(name, fileExtension = 'jpg'){
   this.name = name;
-  this.image = `img/${name}.${fileExtension}`;
   this.views = 0;
   this.votes = 0;
+  this.image = `img/${name}.${fileExtension}`;
+
   state.array.push(this);
 }
 let bag = new Odd('bag');
@@ -37,17 +39,68 @@ let unicorn = new Odd('unicorn');
 let waterCan = new Odd('water-can');
 let wineGlass = new Odd('wine-glass');
 
-// console.log(state);
+
+// console.log(state.array);
 
 //random image generator;
-
 function randomImg (){
   return Math.floor(Math.random() * state.array.length);
-};
+}
 
+function render (){
+  let imgOne = randomImg();
+  let imgTwo = randomImg();
+  let imgThree = randomImg();
+  while (imgOne ===imgTwo || imgOne === imgThree || imgTwo === imgThree ){
+    imgTwo = randomImg();
+    imgThree = randomImg();
+  }
+  //console.log(state.array[imgOne])
+  itemOne.src = state.array[imgOne].image;
+  itemOne.alt = state.array[imgOne].name;
+  state.array[imgOne].views++;
 
+  itemTwo.src = state.array[imgTwo].image;
+  itemTwo.alt = state.array[imgTwo].name;
+  state.array[imgTwo].views++;
 
+  itemThree.src = state.array[imgThree].image;
+  itemThree.alt = state.array[imgThree].name;
+  state.array[imgThree].views++;
+}
+
+// console.log(render());
 // console.log(randomImg())
 
 // let img = '<img src="bag.jpg">'
 // itemOne.innerHTML = img;
+
+function handleClick(event){
+  voteCount--;
+
+  let imgClicked = event.target.alt;
+  for (let i=0; i<state.array.length; i++){
+    if (imgClicked===state.array[i].name){
+      state.array[i].votes++;
+      // console.log(imgClicked,state.array[i].votes);
+    }
+  }
+
+  render();
+  if (voteCount===0){
+    containerElem.removeEventListener('click', handleClick);
+  }
+}
+
+function handleShowResults(){
+  if (voteCount===0){
+    for(let i = 0; i < state.array.length; i++){
+      let liElem = document.createElement('li');
+      liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`
+      results.append(liElem);
+    }
+  }
+}
+render ();
+containerElem.addEventListener('click', handleClick);
+button.addEventListener('click', handleShowResults);

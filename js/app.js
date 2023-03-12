@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 let containerElem = document.getElementById('container');
 let itemOne = document.getElementById('one');
@@ -96,7 +97,7 @@ function handleShowResults(){
   if (voteCount===0){
     for(let i = 0; i < state.array.length; i++){
       let liElem = document.createElement('li');
-      liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`
+      liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`;
       results.append(liElem);
     }
   }

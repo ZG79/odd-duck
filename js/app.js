@@ -49,14 +49,19 @@ function randomImg (){
 }
 
 function render (){
-  let imgOne = randomImg();
-  let imgTwo = randomImg();
-  let imgThree = randomImg();
-  while (imgOne ===imgTwo || imgOne === imgThree || imgTwo === imgThree ){
-    imgTwo = randomImg();
-    imgThree = randomImg();
+  let images = [];
+  while (images.length<3){
+    let newIndex = randomImg();
+    if (images.indexOf(newIndex) === -1){
+      images.push(newIndex);
+    }
+    newIndex = randomImg ();
   }
-  //console.log(state.array[imgOne])
+
+  let imgOne = images.pop();
+  let imgTwo = images.pop();
+  let imgThree = images.pop();
+
   itemOne.src = state.array[imgOne].image;
   itemOne.alt = state.array[imgOne].name;
   state.array[imgOne].views++;
@@ -72,9 +77,6 @@ function render (){
 
 // console.log(render());
 // console.log(randomImg())
-
-// let img = '<img src="bag.jpg">'
-// itemOne.innerHTML = img;
 
 function handleClick(event){
   voteCount--;

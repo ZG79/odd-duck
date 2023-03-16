@@ -7,6 +7,7 @@ let itemThree = document.getElementById('three');
 let button = document.getElementById('button');
 let results = document.getElementById('results');
 let voteCount = 25;
+const ctx = document.getElementById('myChart');
 
 const state = {
   array: [],
@@ -78,6 +79,61 @@ function render (){
 // console.log(render());
 // console.log(randomImg())
 
+
+//Chart section starts
+
+function renderChart (){
+  let imgNames = [];
+  let imgVotes = [];
+  let imgViews =[];
+  for (let i =0; i<state.array.length; i++){
+    imgNames.push(state.array[i].name);
+    imgVotes.push(state.array[i].votes);
+    imgViews.push(state.array[i].views);
+  }
+
+  let resultsChart =  {
+    type: 'bar',
+    data: {
+      labels: imgNames,
+      datasets: [{
+        label: '# of Votes',
+        data: imgVotes,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        date: imgViews,
+        borderWidth: 1
+      }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  // eslint-disable-next-line no-undef
+  new Chart(ctx, resultsChart);
+}
+
+function changeBackgroundColorToWhite() {
+  document.getElementById('myChart').style.backgroundColor = 'white';
+}
+
 function handleClick(event){
   voteCount--;
 
@@ -102,8 +158,14 @@ function handleShowResults(){
       liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`;
       results.append(liElem);
     }
+    renderChart();
+    changeBackgroundColorToWhite();
   }
 }
+
+
 render ();
+
 containerElem.addEventListener('click', handleClick);
 button.addEventListener('click', handleShowResults);
+

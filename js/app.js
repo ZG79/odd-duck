@@ -112,8 +112,16 @@ function renderChart (){
       },
       {
         label: '# of Views',
-        date: imgViews,
-        borderWidth: 1
+        data: imgViews,
+        borderWidth: 1,
+        backgroundColor: ['rgba(255,72,196,0.3)',
+          'rgba(43,209,252, 0.3)',
+          'rgba(243,234,95,0.3)',
+          'rgba(192,77,249,0.3)',
+          'rgba(255,63,63, 0.3)',
+          'rgba(52,72,196, 0.3)',
+          'rgba(43,20,252, 0.3)',
+        ],
       }
       ]
     },

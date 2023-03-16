@@ -7,6 +7,7 @@ let itemThree = document.getElementById('three');
 let button = document.getElementById('button');
 let results = document.getElementById('results');
 let voteCount = 25;
+const ctx = document.getElementById('myChart');
 
 const state = {
   array: [],
@@ -49,14 +50,19 @@ function randomImg (){
 }
 
 function render (){
-  let imgOne = randomImg();
-  let imgTwo = randomImg();
-  let imgThree = randomImg();
-  while (imgOne ===imgTwo || imgOne === imgThree || imgTwo === imgThree ){
-    imgTwo = randomImg();
-    imgThree = randomImg();
+  let images = [];
+  while (images.length<3){
+    let newIndex = randomImg();
+    if (images.indexOf(newIndex) === -1){
+      images.push(newIndex);
+    }
+    newIndex = randomImg ();
   }
-  //console.log(state.array[imgOne])
+
+  let imgOne = images.pop();
+  let imgTwo = images.pop();
+  let imgThree = images.pop();
+
   itemOne.src = state.array[imgOne].image;
   itemOne.alt = state.array[imgOne].name;
   state.array[imgOne].views++;
@@ -73,8 +79,68 @@ function render (){
 // console.log(render());
 // console.log(randomImg())
 
-// let img = '<img src="bag.jpg">'
-// itemOne.innerHTML = img;
+
+//Chart section starts
+
+function renderChart (){
+  let imgNames = [];
+  let imgVotes = [];
+  let imgViews =[];
+  for (let i =0; i<state.array.length; i++){
+    imgNames.push(state.array[i].name);
+    imgVotes.push(state.array[i].votes);
+    imgViews.push(state.array[i].views);
+  }
+
+  let resultsChart =  {
+    type: 'bar',
+    data: {
+      labels: imgNames,
+      datasets: [{
+        label: '# of Votes',
+        data: imgVotes,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 205, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(201, 203, 207, 0.2)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: imgViews,
+        borderWidth: 1,
+        backgroundColor: ['rgba(255,72,196,0.3)',
+          'rgba(43,209,252, 0.3)',
+          'rgba(243,234,95,0.3)',
+          'rgba(192,77,249,0.3)',
+          'rgba(255,63,63, 0.3)',
+          'rgba(52,72,196, 0.3)',
+          'rgba(43,20,252, 0.3)',
+        ],
+      }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  // eslint-disable-next-line no-undef
+  new Chart(ctx, resultsChart);
+}
+
+function changeBackgroundColorToWhite() {
+  document.getElementById('myChart').style.backgroundColor = 'white';
+}
 
 function handleClick(event){
   voteCount--;
@@ -100,8 +166,14 @@ function handleShowResults(){
       liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`;
       results.append(liElem);
     }
+    renderChart();
+    changeBackgroundColorToWhite();
   }
 }
+
+
 render ();
+
 containerElem.addEventListener('click', handleClick);
 button.addEventListener('click', handleShowResults);
+

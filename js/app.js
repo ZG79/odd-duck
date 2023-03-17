@@ -49,15 +49,29 @@ function randomImg (){
   return Math.floor(Math.random() * state.array.length);
 }
 
-function render (){
-  let images = [];
-  while (images.length<3){
+// function render (){
+//   let images = [];
+//   while (images.length<3){
+//     let newIndex = randomImg();
+//     if (images.indexOf(newIndex) === -1){
+//       images.push(newIndex);
+//     }
+//     newIndex = randomImg ();
+//   }
+let images = [];
+function render() {
+
+  while (images.length < 6) {
     let newIndex = randomImg();
-    if (images.indexOf(newIndex) === -1){
-      images.push(newIndex);
+    // If images already includes the newIndex, call randomImg again
+    if (images.includes(newIndex)) {
+      newIndex = randomImg();
+    } else {
+      images.unshift(newIndex);
     }
-    newIndex = randomImg ();
   }
+  console.log(images);
+
 
   let imgOne = images.pop();
   let imgTwo = images.pop();

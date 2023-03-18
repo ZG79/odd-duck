@@ -4,7 +4,7 @@ let containerElem = document.getElementById('container');
 let itemOne = document.getElementById('one');
 let itemTwo = document.getElementById('two');
 let itemThree = document.getElementById('three');
-let button = document.getElementById('button');
+let button = document.getElementById('buttonOne');
 let results = document.getElementById('results');
 let voteCount = 25;
 const ctx = document.getElementById('myChart');
@@ -21,43 +21,46 @@ function Odd(name, fileExtension = 'jpg'){
 
   state.array.push(this);
 }
-let bag = new Odd('bag');
-let banana = new Odd('banana');
-let bathroom = new Odd('bathroom');
-let boots = new Odd('boots');
-let breakfast = new Odd('breakfast');
-let bubblegum = new Odd('bubblegum');
-let chair = new Odd('chair');
-let cthulhu = new Odd('cthulhu');
-let dogDuck = new Odd('dog-duck');
-let dragon = new Odd('dragon');
-let pen = new Odd('pen');
-let petSweep = new Odd('pet-sweep');
-let scissors = new Odd('scissors');
-let shark = new Odd('shark');
-let sweep = new Odd('sweep','png');
-let tauntaun = new Odd('tauntaun');
-let unicorn = new Odd('unicorn');
-let waterCan = new Odd('water-can');
-let wineGlass = new Odd('wine-glass');
+
+//JSON storage retrieval
+let retrievedProduct = localStorage.getItem('product');
+
+//JSON parse
+let parsedProduct = JSON.parse(retrievedProduct);
+console.log('parsed goats', parsedProduct);
 
 
-// console.log(state.array);
+if(retrievedProduct){
+  state.array = parsedProduct;
+}else {
+
+  let bag = new Odd('bag');
+  let banana = new Odd('banana');
+  let bathroom = new Odd('bathroom');
+  let boots = new Odd('boots');
+  let breakfast = new Odd('breakfast');
+  let bubblegum = new Odd('bubblegum');
+  let chair = new Odd('chair');
+  let cthulhu = new Odd('cthulhu');
+  let dogDuck = new Odd('dog-duck');
+  let dragon = new Odd('dragon');
+  let pen = new Odd('pen');
+  let petSweep = new Odd('pet-sweep');
+  let scissors = new Odd('scissors');
+  let shark = new Odd('shark');
+  let sweep = new Odd('sweep','png');
+  let tauntaun = new Odd('tauntaun');
+  let unicorn = new Odd('unicorn');
+  let waterCan = new Odd('water-can');
+  let wineGlass = new Odd('wine-glass');
+
+}
 
 //random image generator;
 function randomImg (){
   return Math.floor(Math.random() * state.array.length);
 }
 
-// function render (){
-//   let images = [];
-//   while (images.length<3){
-//     let newIndex = randomImg();
-//     if (images.indexOf(newIndex) === -1){
-//       images.push(newIndex);
-//     }
-//     newIndex = randomImg ();
-//   }
 let images = [];
 function render() {
 
@@ -89,10 +92,6 @@ function render() {
   itemThree.alt = state.array[imgThree].name;
   state.array[imgThree].views++;
 }
-
-// console.log(render());
-// console.log(randomImg())
-
 
 //Chart section starts
 
@@ -171,6 +170,11 @@ function handleClick(event){
   render();
   if (voteCount===0){
     containerElem.removeEventListener('click', handleClick);
+
+    //JSON steps
+    let stringifyProduct = JSON.stringify(state.array);
+    localStorage.setItem('product', stringifyProduct);
+    console.log('String product', stringifyProduct);
   }
 }
 
@@ -180,6 +184,7 @@ function handleShowResults(){
       let liElem = document.createElement('li');
       liElem.textContent = `${state.array[i].name} had ${state.array[i].votes} votes and was seen ${state.array[i].views} times.`;
       results.append(liElem);
+
     }
     renderChart();
     changeBackgroundColorToWhite();

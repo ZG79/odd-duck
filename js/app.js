@@ -4,7 +4,7 @@ let containerElem = document.getElementById('container');
 let itemOne = document.getElementById('one');
 let itemTwo = document.getElementById('two');
 let itemThree = document.getElementById('three');
-let button = document.getElementById('button');
+let button = document.getElementById('buttonOne');
 let results = document.getElementById('results');
 let voteCount = 25;
 const ctx = document.getElementById('myChart');
@@ -56,22 +56,11 @@ if(retrievedProduct){
 
 }
 
-// console.log(state.array);
-
 //random image generator;
 function randomImg (){
   return Math.floor(Math.random() * state.array.length);
 }
 
-// function render (){
-//   let images = [];
-//   while (images.length<3){
-//     let newIndex = randomImg();
-//     if (images.indexOf(newIndex) === -1){
-//       images.push(newIndex);
-//     }
-//     newIndex = randomImg ();
-//   }
 let images = [];
 function render() {
 
@@ -103,10 +92,6 @@ function render() {
   itemThree.alt = state.array[imgThree].name;
   state.array[imgThree].views++;
 }
-
-// console.log(render());
-// console.log(randomImg())
-
 
 //Chart section starts
 

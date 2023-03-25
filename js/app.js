@@ -113,13 +113,7 @@ function renderChart (){
         label: '# of Votes',
         data: imgVotes,
         backgroundColor: [
-          // 'rgba(255, 99, 132, 0.2)',
-          // 'rgba(255, 159, 64, 0.2)',
-          // 'rgba(255, 205, 86, 0.2)',
           'rgba(75, 192, 192, 0.3)',
-          // 'rgba(54, 162, 235, 0.2)',
-          // 'rgba(153, 102, 255, 0.2)',
-          // 'rgba(201, 203, 207, 0.2)'
         ],
         borderWidth: 1
       },
@@ -128,12 +122,6 @@ function renderChart (){
         data: imgViews,
         borderWidth: 1,
         backgroundColor: ['rgba(255,72,196,0.3)',
-          // 'rgba(43,209,252, 0.3)',
-          // 'rgba(243,234,95,0.3)',
-          // 'rgba(192,77,249,0.3)',
-          // 'rgba(255,63,63, 0.3)',
-          // 'rgba(52,72,196, 0.3)',
-          // 'rgba(43,20,252, 0.3)',
         ],
 
       }
@@ -163,7 +151,6 @@ function handleClick(event){
   for (let i=0; i<state.array.length; i++){
     if (imgClicked===state.array[i].name){
       state.array[i].votes++;
-      // console.log(imgClicked,state.array[i].votes);
     }
   }
 

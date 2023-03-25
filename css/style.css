@@ -57,6 +57,7 @@ img {
   width: 200px;
   margin: auto;
   padding-bottom: 10px;
+  border-radius: 40%;
 }
 
 p {
